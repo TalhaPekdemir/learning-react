@@ -4,7 +4,9 @@ My adventures with React
 
 ## Keywords
 
-### Component: Reusable pieces of UI.
+### Component
+
+Reusable pieces of UI.
 
 Reasons to use components:
 
@@ -20,46 +22,6 @@ Common rules:
 
 - Components can be written as a function or a class.
 - A component has to return a [JSX](#jsx).
-- Returned JSX has to have exactly one root element.
-
-  ```jsx
-  // This is valid:
-  function SomeComponent() {
-    return <h1>A Header</h1>;
-  }
-  ```
-
-  ```jsx
-  // This is not valid:
-  function SomeComponent(){
-    return <h1>A Header</h1> <p>Some paragraph</p>;
-  }
-  ```
-
-  ```jsx
-  // To return more than one element:
-  function SomeComponent() {
-    return (
-      <div>
-        <h1>A Header</h1>
-        <p>Some paragraph</p>
-      </div>
-    );
-  }
-  ```
-
-  - If you do not want the extra div, use shard syntax. That way extra element would not be added to DOM tree.
-
-    ```jsx
-    function SomeComponent() {
-      return (
-        <>
-          <h1>A Header</h1>
-          <p>Some paragraph</p>
-        </>
-      );
-    }
-    ```
 
 - In order for a component to be usable, it needs to be exposed.
 
@@ -102,7 +64,50 @@ Common rules:
 
 ---
 
-**JSX:**{#jsx} Abbreviation of "JavaScript Extension".
+### JSX
+
+Abbreviation of "JavaScript Extension". Looks like HTML DOM elements but in reality all of them React JSX elements
+
+- Every React component returns exactly one root element. Root can have multiple JSX elements and and these can have different attributes than standard HTML elements.
+
+  ```jsx
+  // This is valid:
+  function SomeComponent() {
+    return <h1>A Header</h1>;
+  }
+  ```
+
+  ```jsx
+  // This is not valid:
+  function SomeComponent(){
+    return <h1>A Header</h1> <p>Some paragraph</p>;
+  }
+  ```
+
+  ```jsx
+  // To return more than one element:
+  function SomeComponent() {
+    return (
+      <div>
+        <h1>A Header</h1>
+        <p>Some paragraph</p>
+      </div>
+    );
+  }
+  ```
+
+  - If you do not want the extra div, use shard syntax. That way extra div would not be added to DOM tree.
+
+    ```jsx
+    function SomeComponent() {
+      return (
+        <>
+          <h1>A Header</h1>
+          <p>Some paragraph</p>
+        </>
+      );
+    }
+    ```
 
 - Allows us to evaluate JS in HTML.
 - Evaluation should be used in curly braces and can be a variable, a function, a mathematical expression...
@@ -123,15 +128,15 @@ Common rules:
   }
   ```
 
-- In VS Code function components can be created with "rfc" shortcut. Similarly class components can be created with "rcc" shortcut. Pressing enter or tab will create the component with the same name of created file.
-
 ---
 
-**Props:** To make the components dynamic. Currently all the components written is static. Performing the same action is might be preferable in some conditions but if that was the case, we had to write a different component for every action. That leads to code duplication and this behavior is against component structure. To achieve a dynamic stucture in React, parameterizing components is called "props".
+### Props
+
+To make the components dynamic. Currently all the components written is static. Performing the same action is might be preferable in some conditions but if that was the case, we had to write a different component for every action. That leads to code duplication and this behavior is against component structure. To achieve a dynamic stucture in React, parameterizing components is called "props".
 
 - Pass the "props" object as parameter to the function component just like vanilla JS.
 
-- Objects can not be rendered directly in components. Use objects respective keys to render in DOM.
+- Objects can not be rendered directly in components. Use object's respective keys to render in DOM.
 
 ```jsx
 export default function SomeComponent(props) {
@@ -139,7 +144,7 @@ export default function SomeComponent(props) {
 }
 ```
 
-- Pass the value as an HTML attribute to the component where component is used.
+- Pass the value like an HTML attribute to the component where component is used.
 
 ```jsx
 function App() {
@@ -223,7 +228,7 @@ function App() {
 export default App;
 ```
 
-- As can be seen if arrays passed and displayed directly, respective elements will be concatenated then rendered.
+- As can be seen if arrays passed and displayed directly, respective items will be concatenated then rendered.
 
   ![image](assets/v18/img/array-passing-before-mapping.png "Active Effects are concatenated")
 
@@ -330,3 +335,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   </React.StrictMode>
 );
 ```
+
+---
+
+### Nice To Have
+
+- In VS Code function components can be created with "rfc" shortcut. Similarly class components can be created with "rcc" shortcut. Pressing enter or tab will create the component with the same name of created file. There are bunch more auto-complete shortcuts like component with props, when using react native etc. Check out by writing rf (for function components) or rc (for class components) and check out listed Intellisense.
