@@ -4,7 +4,7 @@ My adventures with React
 
 ## Keywords
 
-**Component:** Reusable pieces of UI.
+### Component: Reusable pieces of UI. {#component}
 
 Reasons to use components:
 
@@ -19,7 +19,7 @@ Reasons to use components:
 Common rules:
 
 - Components can be written as a function or a class.
-- A component has to return a JSX.
+- A component has to return a [JSX](#jsx).
 - Returned JSX has to have exactly one root element.
 
   ```jsx
@@ -102,7 +102,7 @@ Common rules:
 
 ---
 
-**JSX:** Abbreviation of "JavaScript Extension".
+**JSX:**{#jsx} Abbreviation of "JavaScript Extension".
 
 - Allows us to evaluate JS in HTML.
 - Evaluation should be used in curly braces and can be a variable, a function, a mathematical expression...
