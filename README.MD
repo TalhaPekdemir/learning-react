@@ -71,6 +71,72 @@ Common rules:
   export default App;
   ```
 
+- **Using components inside components** helps further encapsulaing thus making the code simpler to read and manage. Next example utilizes [Props](#props), checking that part out first highly recommended.
+
+- As can be seen currently, Basket component has two functions: Iterating over a given list of items and listing individual items. Basket component does not need to know how list items being consumed. Breaking these two responsibilities and seperating each into on its own file is preferred.
+
+```jsx
+export default function Basket() {
+  const basketItems = [
+    { id: 1, name: "LEGO Speed Champions Ferrari F40 Competizione", price: 25 },
+    { id: 2, name: "LEGO Speed Champions Lamborghini Countach", price: 30 },
+    { id: 3, name: "LEGO Speed Champions McLaren Senna", price: 35 },
+  ];
+
+  return (
+    <div>
+      Basket:
+      <ul>
+        {basketItems.map((item) => (
+          <li key={item.id}>
+            {item.name} ${item.price}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+```
+
+- After seperating component to consume single list item:
+
+```jsx
+export default function BasketItem({ item }) {
+  return (
+    <li>
+      {item.name} ${item.price}
+    </li>
+  );
+}
+```
+
+- Notice that we offloaded the responsibility of handling the list item keys. According to React document, a component itself should know if it has a key. Because keys would not be passed as props. In order to use components requiring keys with map(), key should passed as another prop. **This is a common pitfall!** Therefore,
+
+```jsx
+import BasketItem from "./BasketItem";
+
+export default function Basket() {
+  const basketItems = [
+    { id: 1, name: "LEGO Speed Champions Ferrari F40 Competizione", price: 25 },
+    { id: 2, name: "LEGO Speed Champions Lamborghini Countach", price: 30 },
+    { id: 3, name: "LEGO Speed Champions McLaren Senna", price: 35 },
+  ];
+
+  return (
+    <div>
+      Basket:
+      <ul>
+        {basketItems.map((item) => (
+          <BasketItem key={item.id} item={item} />
+        ))}
+      </ul>
+    </div>
+  );
+}
+```
+
+
+
 ---
 
 ### JSX

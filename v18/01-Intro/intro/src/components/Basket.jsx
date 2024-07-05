@@ -1,3 +1,5 @@
+import BasketItem from "./BasketItem";
+
 export default function Basket() {
   const basketItems = [
     { id: 1, name: "LEGO Speed Champions Ferrari F40 Competizione", price: 25 },
@@ -10,9 +12,7 @@ export default function Basket() {
       Basket:
       <ul>
         {basketItems.map((item) => (
-          <li key={item.id}>
-            {item.name} ${item.price}
-          </li>
+          <BasketItem key={item.id} item={item} />
         ))}
       </ul>
     </div>
