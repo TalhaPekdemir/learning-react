@@ -2,6 +2,15 @@
 
 My adventures with React
 
+## Table of contents:
+
+1. [Component](#component)
+2. [JSX](#jsx)
+3. [Props](#props)
+4. [React Technicals](#react-technicals)
+5. [Nice to Have](#nice-to-have)
+
+
 ## Keywords
 
 ### Component
@@ -127,6 +136,8 @@ Abbreviation of "JavaScript Extension". Looks like HTML DOM elements but in real
     );
   }
   ```
+
+
 
 ---
 
