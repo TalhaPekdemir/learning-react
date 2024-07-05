@@ -45,7 +45,7 @@ Common rules:
     }
     ```
 
-- To be able to use exposed component, it needs to be imported like a module. After that, can be used like a HTML element.
+- To be able to use exposed component, it needs to be imported like a module. After that, can be used like an HTML element.
 
   ```jsx
   // App.jsx
@@ -66,7 +66,7 @@ Common rules:
 
 ### JSX
 
-Abbreviation of "JavaScript Extension". Looks like HTML DOM elements but in reality all of them React JSX elements
+Abbreviation of "JavaScript Extension". Looks like HTML DOM elements but in reality all of them are React JSX elements
 
 - Every React component returns exactly one root element. Root can have multiple JSX elements and and these can have different attributes than standard HTML elements.
 
@@ -131,8 +131,7 @@ Abbreviation of "JavaScript Extension". Looks like HTML DOM elements but in real
 ---
 
 ### Props
-
-To make the components dynamic. Currently all the components written is static. Performing the same action is might be preferable in some conditions but if that was the case, we had to write a different component for every action. That leads to code duplication and this behavior is against component structure. To achieve a dynamic stucture in React, parameterizing components is called "props".
+Used to make the components dynamic. Currently all the components written is static. Performing the same action is might be preferable in some conditions but if that was the case, we had to write a different component for every action. That leads to code duplication and this behavior is against component structure. To achieve a dynamic stucture in React, parameterizing components is called "props".
 
 - Pass the "props" object as parameter to the function component just like vanilla JS.
 
@@ -188,7 +187,7 @@ export default function Hello({ message, name }) {
 }
 ```
 
-- **Props are immutable.** Which means, its value can not be changed after passing.
+- **Props are immutable.** Which means, props' value can not be changed after passing.
 
 - With props; strings, other values, arrays, objects, functions and other components can be passed.
 
@@ -254,7 +253,7 @@ export default function Player({ player }) {
 
 ![image](assets/v18/img/passed-array-with-mapping.png "Now player effects can be seen organized.")
 
-- But after that an error can be seen in console about list item has no key attribute. This is a similar situation where Vue.js (<3) requires a key when looping a given array in order to render/apply animations etc. to virtual DOM elements.
+- But after that an error can be seen in console about list item has no key attribute. This is a similar situation where Vue.js (<3) expects a key when looping a given array in order to render/apply animations etc. to virtual DOM elements.
 
 ![image](assets/v18/img/error-list-child-no-key.png)
 
@@ -266,10 +265,10 @@ export default function Player({ player }) {
   - Do NOT use array index as key. Array can be manipulated and (eg. item removal) can result unexpected bugs.
 
 ```jsx
-<li key={/* key goes here*/}> {/* item to render goes here*/} </li>
+<li key={/* unique value goes here*/}> {/* item to render goes here*/} </li>
 ```
 
-- **Rendering array of objects** is not as straight forward as listing arrays with non object types. If object of an array being called to render by developer, React will throw an error indicating that objects are not a valid React child.
+- **Rendering array of objects** is not as straight forward as listing arrays with non object types. If object of an array being called to render by developer, React will throw an error indicating that objects are not a valid React child. 
 
 ```jsx
 export default function Basket() {
@@ -293,7 +292,7 @@ export default function Basket() {
 
 ![image](/assets/v18/img/error-render-array-object-directly.png)
 
-- With an error spaning entirety of the debug console rendering objects might seem like a little daunting but the solution is simple. Objects can not be rendered directly but their values can.
+- With an error spaning the entire debug console, rendering objects might seem like a little daunting but the solution is simple. Just like we were not allowed to display props directly, we had to use `props.someProperty`. Again, same should apply because both are objects.
 
 ```jsx
 export default function Basket() {
