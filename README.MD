@@ -4,7 +4,7 @@ My adventures with React
 
 ## Keywords
 
-### Component: Reusable pieces of UI. {#component}
+### Component: Reusable pieces of UI.
 
 Reasons to use components:
 
@@ -249,7 +249,7 @@ export default function Player({ player }) {
 
 ![image](assets/v18/img/passed-array-with-mapping.png "Now player effects can be seen organized.")
 
-- But after that an error can be seen in console about list item has no key attribute. This is a similar situation where Vue.js (<3) requires a key when looping a given array in order to render/apply animations etc. to virtual DOM elements. 
+- But after that an error can be seen in console about list item has no key attribute. This is a similar situation where Vue.js (<3) requires a key when looping a given array in order to render/apply animations etc. to virtual DOM elements.
 
 ![image](assets/v18/img/error-list-child-no-key.png)
 
@@ -312,10 +312,6 @@ export default function Basket() {
   );
 }
 ```
-
-
-
-
 
 ---
 
