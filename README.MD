@@ -66,17 +66,27 @@ Common rules:
   ```jsx
   function SomeComponent(){
     return(
-      //...
+      // ...
     );
   }
 
   export default SomeComponent;
   ```
 
+  - Or
+
+    ```jsx
+    export default function SomeComponent(){
+      return(
+        // ...
+      );
+    }
+    ```
+
 - To be able to use exposed component, it needs to be imported like a module. After that, can be used like a HTML element.
 
   ```jsx
-  //App.jsx
+  // App.jsx
   import SomeComponent from "path/to/SomeComponent";
 
   function App() {
@@ -113,6 +123,8 @@ Common rules:
   }
   ```
 
+- In VS Code function components can be created with "rfc" shortcut. Similarly class components can be created with "rcc" shortcut. Pressing enter or tab will create the component with the same name of created file.
+
 ---
 
 **Props:** To make the components dynamic. Currently all the components written is static. Performing the same action is might be preferable in some conditions but if that was the case, we had to write a different component for every action. That leads to code duplication and this behavior is against component structure. To achieve a dynamic stucture in React, parameterizing components is called "props".
@@ -122,7 +134,7 @@ Common rules:
 - Objects can not be rendered directly in components. Use objects respective keys to render in DOM.
 
 ```jsx
-function SomeComponent(props) {
+export default function SomeComponent(props) {
   return <h1>Hello {props.name}</h1>;
 }
 ```
@@ -135,11 +147,21 @@ function App() {
 }
 ```
 
+- Or if you don't want to hardcode, use JSX evaluation syntax.
+
+```jsx
+function App() {
+  const name = "Bob";
+  return <SomeComponent name={name} />;
+}
+```
+
 - Amount of props can be sent to the component has no limits.
+
 - JS destructor syntax can be used to destruct props object.
 
 ```jsx
-function Hello(props) {
+export default function Hello(props) {
   const { message, name } = props;
   return (
     <h1>
@@ -147,27 +169,153 @@ function Hello(props) {
     </h1>
   );
 }
-
-export default Hello;
 ```
 
 - Better than that, props can be destructed as soon as passed without extra step. Fun fact, you can send emojis as props.
 
 ```jsx
-function Hello({ message, name }) {
+export default function Hello({ message, name }) {
   return (
     <h1>
       {message} {name}
     </h1>
   );
 }
-
-export default Hello;
 ```
 
 - **Props are immutable.** Which means, its value can not be changed after passing.
 
 - With props; strings, other values, arrays, objects, functions and other components can be passed.
+
+- **Sending arrays and objects as props** is not different than using literals in JSX tags.
+
+```jsx
+// Player.jsx
+export default function Player(props) {
+  return (
+    <div>
+      <p>Nickname: {props.player.nickname}</p>
+      <p>Level: {props.player.level}</p>
+      <p>Class: {props.player.class}</p>
+      <p>Active Effects: {props.player.activeEffects}</p>
+    </div>
+  );
+}
+
+// App.jsx
+import Player from "./components/Player";
+
+function App() {
+  const player = {
+    nickname: "Bob the Destructor",
+    level: 38,
+    class: "Dragonslayer",
+    activeEffects: ["Strength II", "Healing I"],
+  };
+
+  return (
+    <div className="App">
+      <Player player={player} />
+    </div>
+  );
+}
+
+export default App;
+```
+
+- As can be seen if arrays passed and displayed directly, respective elements will be concatenated then rendered.
+
+  ![image](assets/v18/img/array-passing-before-mapping.png "Active Effects are concatenated")
+
+- **Rendering arrays** can be achieved with JavaScript map() function.
+
+```jsx
+export default function Player({ player }) {
+  return (
+    <div>
+      <p>Nickname: {player.nickname}</p>
+      <p>Level: {player.level}</p>
+      <p>Class: {player.class}</p>
+      <p>Active Effects:</p>
+      <ul>
+        {player.activeEffects.map((effect) => (
+          <li>{effect}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+```
+
+![image](assets/v18/img/passed-array-with-mapping.png "Now player effects can be seen organized.")
+
+- But after that an error can be seen in console about list item has no key attribute. This is a similar situation where Vue.js (<3) requires a key when looping a given array in order to render/apply animations etc. to virtual DOM elements. 
+
+![image](assets/v18/img/error-list-child-no-key.png)
+
+- Assign a key to list item element so React can differentiate between them.
+  - Keys have to be unique.
+  - You CAN assign your keys random like from [UUID](https://www.npmjs.com/package/uuid).
+  - You should NOT assign your keys with Math.random(). Or anything can cause clashing in that regard. Randomly generated numbers can clash and it is very slow for runtime in rendering. Random method will be executed every time a render occurs.
+  - Your unique keys SHOULD be coming along with your dataset.
+  - Do NOT use array index as key. Array can be manipulated and (eg. item removal) can result unexpected bugs.
+
+```jsx
+<li key={/* key goes here*/}> {/* item to render goes here*/} </li>
+```
+
+- **Rendering array of objects** is not as straight forward as listing arrays with non object types. If object of an array being called to render by developer, React will throw an error indicating that objects are not a valid React child.
+
+```jsx
+export default function Basket() {
+  const basketItems = [
+    { id: 1, name: "LEGO Speed Champions Ferrari F40 Competizione", price: 25 },
+    { id: 2, name: "LEGO Speed Champions Lamborghini Countach", price: 30 },
+    { id: 3, name: "LEGO Speed Champions McLaren Senna", price: 35 },
+  ];
+
+  return (
+    <div>
+      <ul>
+        {basketItems.map((item) => (
+          <li key={item.id}>{item}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+```
+
+![image](/assets/v18/img/error-render-array-object-directly.png)
+
+- With an error spaning entirety of the debug console rendering objects might seem like a little daunting but the solution is simple. Objects can not be rendered directly but their values can.
+
+```jsx
+export default function Basket() {
+  const basketItems = [
+    { id: 1, name: "LEGO Speed Champions Ferrari F40 Competizione", price: 25 },
+    { id: 2, name: "LEGO Speed Champions Lamborghini Countach", price: 30 },
+    { id: 3, name: "LEGO Speed Champions McLaren Senna", price: 35 },
+  ];
+
+  return (
+    <div>
+      Basket:
+      <ul>
+        {basketItems.map((item) => (
+          <li key={item.id}>
+            {item.name} ${item.price}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+```
+
+
+
+
 
 ---
 
