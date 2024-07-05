@@ -5,11 +5,20 @@ My adventures with React
 ## Table of contents:
 
 1. [Component](#component)
+    - [Writing custom function components](#writing-custom-function-components)
+    - [Using components](#using-components)
+    - [Using components inside components](#using-components-inside-components)
 2. [JSX](#jsx)
 3. [Props](#props)
+    - [What is props?](#what-is-props)
+    - [Basic usage of props](#basic-usage-of-props)
+    - [Passing props](#passing-props)
+    - [Using props with JS object capabilities](#using-props-with-js-object-capabilities)
+    - [Sending arrays and objects as props](#sending-arrays-and-objects-as-props)
+    - [Rendering arrays](#rendering-arrays)
+    - [Rendering array of objects](#rendering-array-of-objects)
 4. [React Technicals](#react-technicals)
 5. [Nice to Have](#nice-to-have)
-
 
 ## Keywords
 
@@ -34,25 +43,29 @@ Common rules:
 
 - In order for a component to be usable, it needs to be exposed.
 
+#### Writing custom function components
+
+```jsx
+function SomeComponent(){
+  return(
+    // ...
+  );
+}
+
+export default SomeComponent;
+```
+
+- Or
+
   ```jsx
-  function SomeComponent(){
+  export default function SomeComponent(){
     return(
       // ...
     );
   }
-
-  export default SomeComponent;
   ```
 
-  - Or
-
-    ```jsx
-    export default function SomeComponent(){
-      return(
-        // ...
-      );
-    }
-    ```
+#### Using components
 
 - To be able to use exposed component, it needs to be imported like a module. After that, can be used like an HTML element.
 
@@ -71,7 +84,9 @@ Common rules:
   export default App;
   ```
 
-- **Using components inside components** helps further encapsulaing thus making the code simpler to read and manage. Next example utilizes [Props](#props), checking that part out first highly recommended.
+#### Using components inside components
+
+Helps further encapsulaing thus making the code simpler to read and manage. Next example utilizes [Props](#props), checking that part out first highly recommended.
 
 - As can be seen currently, Basket component has two functions: Iterating over a given list of items and listing individual items. Basket component does not need to know how list items being consumed. Breaking these two responsibilities and seperating each into on its own file is preferred.
 
@@ -135,8 +150,6 @@ export default function Basket() {
 }
 ```
 
-
-
 ---
 
 ### JSX
@@ -171,7 +184,7 @@ Abbreviation of "JavaScript Extension". Looks like HTML DOM elements but in real
   }
   ```
 
-  - If you do not want the extra div, use shard syntax. That way extra div would not be added to DOM tree.
+  - If you do not want the extra div, use shorthand _Fragment_ syntax. That way extra div would not be added to DOM tree.
 
     ```jsx
     function SomeComponent() {
@@ -182,6 +195,23 @@ Abbreviation of "JavaScript Extension". Looks like HTML DOM elements but in real
         </>
       );
     }
+    ```
+
+  - If you want to return more than one element but also parameterize them or pass a key (more on that on [Props](#props)), instead of using the shorthand you have to use Fragment itself.
+
+    ```jsx
+    import { Fragment } from "react";
+
+    // ...
+
+    const articleItems = articles.map((article) => (
+      <Fragment key={article.id}>
+        <h1>A Header</h1>
+        <p>Some paragraph</p>
+      </Fragment>
+    ));
+
+    // ...
     ```
 
 - Allows us to evaluate JS in HTML.
@@ -203,12 +233,15 @@ Abbreviation of "JavaScript Extension". Looks like HTML DOM elements but in real
   }
   ```
 
-
-
 ---
 
 ### Props
+
+#### What is props?
+
 Used to make the components dynamic. Currently all the components written is static. Performing the same action is might be preferable in some conditions but if that was the case, we had to write a different component for every action. That leads to code duplication and this behavior is against component structure. To achieve a dynamic stucture in React, parameterizing components is called "props".
+
+#### Basic usage of props
 
 - Pass the "props" object as parameter to the function component just like vanilla JS.
 
@@ -219,6 +252,8 @@ export default function SomeComponent(props) {
   return <h1>Hello {props.name}</h1>;
 }
 ```
+
+#### Passing props
 
 - Pass the value like an HTML attribute to the component where component is used.
 
@@ -238,6 +273,8 @@ function App() {
 ```
 
 - Amount of props can be sent to the component has no limits.
+
+#### Using props with JS object capabilities
 
 - JS destructor syntax can be used to destruct props object.
 
@@ -268,7 +305,9 @@ export default function Hello({ message, name }) {
 
 - With props; strings, other values, arrays, objects, functions and other components can be passed.
 
-- **Sending arrays and objects as props** is not different than using literals in JSX tags.
+#### Sending arrays and objects as props
+
+is not different than using literals in JSX tags. Basically object inside of an object.
 
 ```jsx
 // Player.jsx
@@ -308,7 +347,11 @@ export default App;
 
   ![image](assets/v18/img/array-passing-before-mapping.png "Active Effects are concatenated")
 
-- **Rendering arrays** can be achieved with JavaScript map() function.
+#### Rendering arrays
+
+Can be achieved with JavaScript map() function.
+
+**Note:** If after lambda _(=>)_ there is a method body _((x) => {//code to execute})_, it must have a return statement.
 
 ```jsx
 export default function Player({ player }) {
@@ -345,7 +388,9 @@ export default function Player({ player }) {
 <li key={/* unique value goes here*/}> {/* item to render goes here*/} </li>
 ```
 
-- **Rendering array of objects** is not as straight forward as listing arrays with non object types. If object of an array being called to render by developer, React will throw an error indicating that objects are not a valid React child. 
+#### Rendering array of objects
+
+Not as straight forward as listing arrays with non object types. If object of an array being called to render by developer, React will throw an error indicating that objects are not a valid React child.
 
 ```jsx
 export default function Basket() {
@@ -369,7 +414,7 @@ export default function Basket() {
 
 ![image](/assets/v18/img/error-render-array-object-directly.png)
 
-- With an error spaning the entire debug console, rendering objects might seem like a little daunting but the solution is simple. Just like we were not allowed to display props directly, we had to use `props.someProperty`. Again, same should apply because both are objects.
+- With an error spaning the entire debug console, rendering objects might seem like a little daunting but the solution is simple. When we were not allowed to display props directly, we had to use `props.someProperty`. Just this time `object.someProperty`. Same should apply because both are objects.
 
 ```jsx
 export default function Basket() {
