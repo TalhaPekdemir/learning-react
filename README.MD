@@ -21,9 +21,7 @@ My adventures with React
 4. [React Technicals](#react-technicals)
 5. [Nice to Have](#nice-to-have)
 
-## Keywords
-
-### Component
+## Component
 
 Reusable pieces of UI.
 
@@ -44,7 +42,7 @@ Common rules:
 
 - In order for a component to be usable, it needs to be exposed.
 
-#### Writing custom function components
+### Writing custom function components
 
 ```jsx
 function SomeComponent(){
@@ -66,7 +64,7 @@ export default SomeComponent;
   }
   ```
 
-#### Using components
+### Using components
 
 - To be able to use exposed component, it needs to be imported like a module. After that, can be used like an HTML element.
 
@@ -85,7 +83,7 @@ export default SomeComponent;
   export default App;
   ```
 
-#### Using components inside components
+### Using components inside components
 
 Helps further encapsulaing thus making the code simpler to read and manage. Next example utilizes [Props](#props), checking that part out first highly recommended.
 
@@ -151,7 +149,7 @@ export default function Basket() {
 }
 ```
 
-#### Conditional Rendering
+### Conditional Rendering
 
 - Preference 1: Everything at one place all at once
 
@@ -252,6 +250,8 @@ export default function LogInOutButton() {
 }
 ```
 
+=>
+
 ```jsx
 import ButtonWithText from "./ButtonWithText";
 
@@ -279,7 +279,7 @@ export default function ProductShowcase({ product }) {
 }
 
 // Products.jsx
-import BasketItem from "./ProductShowcase";
+import ProductShowcase from "./ProductShowcase";
 
 export default function Products() {
   const products = [
@@ -322,9 +322,11 @@ export default function Products() {
 }
 ```
 
+![image](assets/v18/img/conditional-rendering-1.png)
+
 ---
 
-### JSX
+## JSX
 
 Abbreviation of "JavaScript Extension". Looks like HTML DOM elements but in reality all of them are React JSX elements
 
@@ -407,13 +409,13 @@ Abbreviation of "JavaScript Extension". Looks like HTML DOM elements but in real
 
 ---
 
-### Props
+## Props
 
-#### What is props?
+### What is props?
 
 Used to make the components dynamic. Currently all the components written is static. Performing the same action is might be preferable in some conditions but if that was the case, we had to write a different component for every action. That leads to code duplication and this behavior is against component structure. To achieve a dynamic stucture in React, parameterizing components is called "props".
 
-#### Basic usage of props
+### Basic usage of props
 
 - Pass the "props" object as parameter to the function component just like vanilla JS.
 
@@ -425,7 +427,7 @@ export default function SomeComponent(props) {
 }
 ```
 
-#### Passing props
+### Passing props
 
 - Pass the value like an HTML attribute to the component where component is used.
 
@@ -446,7 +448,7 @@ function App() {
 
 - Amount of props can be sent to the component has no limits.
 
-#### Using props with JS object capabilities
+### Using props with JS object capabilities
 
 - JS destructor syntax can be used to destruct props object.
 
@@ -477,7 +479,7 @@ export default function Hello({ message, name }) {
 
 - With props; strings, other values, arrays, objects, functions and other components can be passed.
 
-#### Sending arrays and objects as props
+### Sending arrays and objects as props
 
 is not different than using literals in JSX tags. Basically object inside of an object.
 
@@ -519,7 +521,7 @@ export default App;
 
   ![image](assets/v18/img/array-passing-before-mapping.png "Active Effects are concatenated")
 
-#### Rendering arrays
+### Rendering arrays
 
 Can be achieved with JavaScript map() function.
 
@@ -560,7 +562,7 @@ export default function Player({ player }) {
 <li key={/* unique value goes here*/}> {/* item to render goes here*/} </li>
 ```
 
-#### Rendering array of objects
+### Rendering array of objects
 
 Not as straight forward as listing arrays with non object types. If object of an array being called to render by developer, React will throw an error indicating that objects are not a valid React child.
 
@@ -613,7 +615,7 @@ export default function Basket() {
 
 ---
 
-### React Technicals
+## React Technicals
 
 - If we console.log() something it will be seen as two outputs because of dev environment. React.StrictMode executes what's encapsulating twice. It should be removed when project released to production.
 
@@ -631,6 +633,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 
 ---
 
-### Nice To Have
+## Nice To Have
 
 - In VS Code function components can be created with "rfc" shortcut. Similarly class components can be created with "rcc" shortcut. Pressing enter or tab will create the component with the same name of created file. There are bunch more auto-complete shortcuts like component with props, when using react native etc. Check out by writing rf (for function components) or rc (for class components) and check out listed Intellisense.
