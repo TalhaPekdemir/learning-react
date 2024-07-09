@@ -5,6 +5,8 @@ import Player from "./components/Player";
 import Basket from "./components/Basket";
 import LogInOutButton from "./components/LogInOutButton";
 import Products from "./components/Products";
+import BasicEventHandling from "./components/BasicEventHandling";
+import Counter from "./components/Counter";
 
 function App() {
   // A component has to return a JSX.
@@ -20,7 +22,9 @@ function App() {
       {/* <Player player={player} /> */}
       {/* <Basket /> */}
       {/* <LogInOutButton /> */}
-      <Products />
+      {/* <Products /> */}
+      {/* <BasicEventHandling /> */}
+      <Counter />
     </div>
   );
 }

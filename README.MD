@@ -18,8 +18,9 @@ My adventures with React
    - [Sending arrays and objects as props](#sending-arrays-and-objects-as-props)
    - [Rendering arrays](#rendering-arrays)
    - [Rendering array of objects](#rendering-array-of-objects)
-4. [React Technicals](#react-technicals)
-5. [Nice to Have](#nice-to-have)
+4. [Event Handling](#event-handling)
+5. [React Technicals](#react-technicals)
+6. [Nice to Have](#nice-to-have)
 
 ## Component
 
@@ -419,7 +420,7 @@ Used to make the components dynamic. Currently all the components written is sta
 
 - Pass the "props" object as parameter to the function component just like vanilla JS.
 
-- Objects can not be rendered directly in components. Use object's respective keys to render in DOM.
+- Objects cannot be rendered directly in components. Use object's respective keys to render in DOM.
 
 ```jsx
 export default function SomeComponent(props) {
@@ -475,7 +476,7 @@ export default function Hello({ message, name }) {
 }
 ```
 
-- **Props are immutable.** Which means, props' value can not be changed after passing.
+- **Props are immutable.** Which means, props' value cannot be changed after passing.
 
 - With props; strings, other values, arrays, objects, functions and other components can be passed.
 
@@ -614,6 +615,162 @@ export default function Basket() {
 ```
 
 ---
+
+## Event Handling
+
+### Event Basics
+
+To make a website interactive, JS events are used. Like clicking a button or hovering a section. Every JS event has an implementation in React.
+
+```jsx
+<button onClick={someClickEventHandler}> Click </button>
+```
+
+is the React equivalent of this:
+
+```html
+<button onclick="someClickEventHandler()">Click</button>
+```
+
+- React events are written in _camelCase_.
+
+<br>
+Example below would simply give an alert to user.
+
+```jsx
+export default function BasicEventHandling() {
+  function handleClick() {
+    alert("You have been alerted!");
+  }
+
+  return <button onClick={handleClick}>click to get an alert</button>;
+}
+```
+
+Notice that we haven't called the handler function using braces in JSX. If we did that, function would execute once (twice in strict mode) **[TODO: add reference]** upon rendering and not respond afterwards.
+
+---
+
+## State
+
+### Why state?
+
+[Props](#props) are immutable data containers in react. But what do we do when we need to store something mutable? That's where state comes in. States are objects that holding information about control or behavior of a component.
+
+|         Prop          |           State           |
+| :-------------------: | :-----------------------: |
+| Passed to a component | Stored inside a component |
+|       Immutable       |          Mutable          |
+|   Like a parameter    |   Like a local variable   |
+
+### Using state
+- State can be used throughout app's life-cycle.
+- Change of a state's value causes belonging component to re-render.
+- States are changed with setter functions rather than reaching directly.
+- States are defined using **useState()** React hook. To use, it should be imported.
+
+```jsx
+import { useState } from "react";
+```
+
+- After that syntax is simple. Make it const, define an array. First element of the array is the name of state, second element of the array is the setter of the state. Then initialize it with useState().
+
+```jsx
+const [count, setCount] = useState();
+```
+
+- State can be initialized at the time of definition. To initialize give a value to useState() like paramater. 
+
+```jsx
+const [count, setCount] = useState(0);
+```
+
+- If we put together state with [event handlers](#event-handling) we can change value of a state and render it.
+
+```jsx
+import { useState } from "react";
+
+export default function Counter() {
+  const [count, setCount] = useState(0);
+
+  function increment() {
+    count += 1;
+  }
+
+  return (
+    <div>
+      <h1>Count: {count}</h1>
+      <button onClick={increment}>Increment</button>
+    </div>
+  );
+}
+```
+
+- But doing so will generate an error. Because value of a state cannot be accessed directly.
+
+![image](assets/v18/img/error-change-const-state.png)
+
+- Instead of accessing the value directly setter of state that we defined should be used. Setter function takes parameter as the new value of the state.
+
+```jsx
+import { useState } from "react";
+
+export default function Counter() {
+  const [count, setCount] = useState(0);
+
+  function increment() {
+    setCount(count + 1);
+  }
+
+  return (
+    <div>
+      <h1>Count: {count}</h1>
+      <button onClick={increment}>Increment</button>
+    </div>
+  );
+}
+```
+
+- Multiple states can exist in the same component.
+
+```jsx
+import { useState } from "react";
+
+export default function Counter() {
+  const [count, setCount] = useState(0);
+  const [changeBy, setChangeBy] = useState(1);
+
+  function increment() {
+    setCount(count + changeBy);
+  }
+
+  function decrement() {
+    setCount(count - changeBy);
+  }
+
+  function increaseChange() {
+    setChangeBy(changeBy + 1);
+  }
+
+  function decreaseChange() {
+    if (changeBy < 2) return;
+    setChangeBy(changeBy - 1);
+  }
+
+  return (
+    <div>
+      <h1>Count: {count}</h1>
+      <button onClick={increment}>Increment</button>
+      <button onClick={decrement}>Decrement</button>
+
+      <h2>Changing by value {changeBy} </h2>
+      <button onClick={increaseChange}>Increase Change Speed</button>
+      <button onClick={decreaseChange}>Decrease Change Speed</button>
+    </div>
+  );
+}
+
+```
 
 ## React Technicals
 
