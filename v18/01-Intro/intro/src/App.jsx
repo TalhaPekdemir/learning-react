@@ -4,6 +4,7 @@ import Hello from "./components/Hello";
 import Player from "./components/Player";
 import Basket from "./components/Basket";
 import LogInOutButton from "./components/LogInOutButton";
+import Products from "./components/Products";
 
 function App() {
   // A component has to return a JSX.
@@ -17,8 +18,9 @@ function App() {
   return (
     <div className="App">
       {/* <Player player={player} /> */}
-      <Basket />
+      {/* <Basket /> */}
       {/* <LogInOutButton /> */}
+      <Products />
     </div>
   );
 }
