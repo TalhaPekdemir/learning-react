@@ -3,6 +3,7 @@ import Paragraph from "./components/Paragraph";
 import Hello from "./components/Hello";
 import Player from "./components/Player";
 import Basket from "./components/Basket";
+import LogInOutButton from "./components/LogInOutButton";
 
 function App() {
   // A component has to return a JSX.
@@ -17,6 +18,7 @@ function App() {
     <div className="App">
       {/* <Player player={player} /> */}
       <Basket />
+      {/* <LogInOutButton /> */}
     </div>
   );
 }

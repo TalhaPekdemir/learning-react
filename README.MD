@@ -5,18 +5,19 @@ My adventures with React
 ## Table of contents:
 
 1. [Component](#component)
-    - [Writing custom function components](#writing-custom-function-components)
-    - [Using components](#using-components)
-    - [Using components inside components](#using-components-inside-components)
+   - [Writing custom function components](#writing-custom-function-components)
+   - [Using components](#using-components)
+   - [Using components inside components](#using-components-inside-components)
+   - [Conditional Rendering](#conditional-rendering)
 2. [JSX](#jsx)
 3. [Props](#props)
-    - [What is props?](#what-is-props)
-    - [Basic usage of props](#basic-usage-of-props)
-    - [Passing props](#passing-props)
-    - [Using props with JS object capabilities](#using-props-with-js-object-capabilities)
-    - [Sending arrays and objects as props](#sending-arrays-and-objects-as-props)
-    - [Rendering arrays](#rendering-arrays)
-    - [Rendering array of objects](#rendering-array-of-objects)
+   - [What is props?](#what-is-props)
+   - [Basic usage of props](#basic-usage-of-props)
+   - [Passing props](#passing-props)
+   - [Using props with JS object capabilities](#using-props-with-js-object-capabilities)
+   - [Sending arrays and objects as props](#sending-arrays-and-objects-as-props)
+   - [Rendering arrays](#rendering-arrays)
+   - [Rendering array of objects](#rendering-array-of-objects)
 4. [React Technicals](#react-technicals)
 5. [Nice to Have](#nice-to-have)
 
@@ -143,6 +144,177 @@ export default function Basket() {
       <ul>
         {basketItems.map((item) => (
           <BasketItem key={item.id} item={item} />
+        ))}
+      </ul>
+    </div>
+  );
+}
+```
+
+#### Conditional Rendering
+
+- Preference 1: Everything at one place all at once
+
+```jsx
+export default function LogInOutButton() {
+  const isLoggedIn = false;
+
+  if (isLoggedIn) {
+    return (
+      <div>
+        <a href="#">Log Out</a>
+      </div>
+    );
+  } else {
+    return (
+      <div>
+        <a href="#">Log In</a>
+      </div>
+    );
+  }
+}
+```
+
+- Preference 2: Everything everywhere all at once
+
+```jsx
+// ButtonWithText.jsx
+export default function ButtonWithText({ text }) {
+  return (
+    <div>
+      <a href="#">{text}</a>
+    </div>
+  );
+}
+
+// LogInOutButton.jsx
+import ButtonWithText from "./ButtonWithText";
+
+export default function LogInOutButton() {
+  const isLoggedIn = false;
+
+  if (isLoggedIn) {
+    return <ButtonWithText text="Log Out" />;
+  } else {
+    return <ButtonWithText text="Log In" />;
+  }
+}
+```
+
+- Preference 3: Element Variables
+
+Because some people don't think having more than one return statement in a function is bad.
+
+Element variables are, JS variables that can hold JSX elements.
+
+```jsx
+export default function LogInOutButton() {
+  const isLoggedIn = false;
+
+  // variable to hold conditionally rendering html
+  let buttonElement;
+
+  if (isLoggedIn) {
+    buttonElement = (
+      <div>
+        <a href="#">Log Out</a>
+      </div>
+    );
+  } else {
+    buttonElement = (
+      <div>
+        <a href="#">Log In</a>
+      </div>
+    );
+  }
+
+  return buttonElement;
+}
+```
+
+- Preference 4: Incorporating the ternary operator
+
+If-else statemens can be written with ternary operator. But utilizing it is dependent on the JSX needs to be rendered. As can be seen in the next example, a simple statement like that can be hard to read. I strongly recommend using ternary operator with rendering components, not JSX itself for the sake of cleaner code.
+
+```jsx
+export default function LogInOutButton() {
+  const isLoggedIn = false;
+
+  return isLoggedIn ? (
+    <div>
+      <a href="#">Log Out</a>
+    </div>
+  ) : (
+    <div>
+      <a href="#">Log In</a>
+    </div>
+  );
+}
+```
+
+```jsx
+import ButtonWithText from "./ButtonWithText";
+
+export default function LogInOutButton() {
+  const isLoggedIn = false;
+
+  return isLoggedIn ? (
+    <ButtonWithText text="Log Out" />
+  ) : (
+    <ButtonWithText text="Log In" />
+  );
+}
+```
+
+Is conditinal rendering only works on component scale? No. Let's say we have a shop and we want to show all our products but some of them are not in stock anymore.
+
+```jsx
+// ProductShowcase.jsx
+export default function ProductShowcase({ product }) {
+  return (
+    <li>
+      {product.name} ${product.price} {product.stock == 0 ? "SOLD OUT" : ""}
+    </li>
+  );
+}
+
+// Products.jsx
+import BasketItem from "./ProductShowcase";
+
+export default function Products() {
+  const products = [
+    {
+      id: 1,
+      name: "LEGO Speed Champions Ferrari F40 Competizione",
+      price: 25,
+      stock: 3,
+    },
+    {
+      id: 2,
+      name: "LEGO Speed Champions Lamborghini Countach",
+      price: 30,
+      stock: 15,
+    },
+    {
+      id: 3,
+      name: "LEGO Speed Champions McLaren Senna",
+      price: 35,
+      stock: 1,
+    },
+    {
+      id: 4,
+      name: "LEGO Speed Champions 1974 Porsche 911 Turbo 3.0",
+      price: 25,
+      stock: 0,
+    },
+  ];
+
+  return (
+    <div>
+      Inventory:
+      <ul>
+        {products.map((product) => (
+          <ProductShowcase key={product.id} product={product} />
         ))}
       </ul>
     </div>
