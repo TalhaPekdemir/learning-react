@@ -7,6 +7,7 @@ import LogInOutButton from "./components/LogInOutButton";
 import Products from "./components/Products";
 import BasicEventHandling from "./components/BasicEventHandling";
 import Counter from "./components/Counter";
+import LoginForm from "./components/LoginForm";
 
 function App() {
   // A component has to return a JSX.
@@ -24,7 +25,8 @@ function App() {
       {/* <LogInOutButton /> */}
       {/* <Products /> */}
       {/* <BasicEventHandling /> */}
-      <Counter />
+      {/* <Counter /> */}
+      <LoginForm />
     </div>
   );
 }

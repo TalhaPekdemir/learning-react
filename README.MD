@@ -19,8 +19,14 @@ My adventures with React
    - [Rendering arrays](#rendering-arrays)
    - [Rendering array of objects](#rendering-array-of-objects)
 4. [Event Handling](#event-handling)
-5. [React Technicals](#react-technicals)
-6. [Nice to Have](#nice-to-have)
+5. [State](#state)
+   - [Why State?](#why-state)
+   - [Using State](#using-state)
+6. [Handling User Input](#handling-user-input)
+   - [Handling Multiple Inputs](#handling-multiple-inputs)
+   - [Handling Form Submission](#handling-form-submission)
+7. [React Technicals](#react-technicals)
+8. [Nice to Have](#nice-to-have)
 
 ## Component
 
@@ -664,6 +670,7 @@ Notice that we haven't called the handler function using braces in JSX. If we di
 |   Like a parameter    |   Like a local variable   |
 
 ### Using state
+
 - State can be used throughout app's life-cycle.
 - Change of a state's value causes belonging component to re-render.
 - States are changed with setter functions rather than reaching directly.
@@ -679,7 +686,7 @@ import { useState } from "react";
 const [count, setCount] = useState();
 ```
 
-- State can be initialized at the time of definition. To initialize give a value to useState() like paramater. 
+- State can be initialized at the time of definition. To initialize give a value to useState() like paramater.
 
 ```jsx
 const [count, setCount] = useState(0);
@@ -769,7 +776,279 @@ export default function Counter() {
     </div>
   );
 }
+```
 
+## Handling User Input
+
+- A text input without value attribute can be changed. But input with value attibute is rendered read-only. In order to be able to change the value of an input with value attribute, onChange handler should be attached.
+
+```html
+<input type="text" value="someText" />
+```
+
+![image](assets/v18/img/error-input-value-without-onChange-handler.png)
+
+- Similar to onClick method of a button, input field can be tracked with onChange event attribute. Execute every time input changes.
+
+```jsx
+export default function LoginForm() {
+  function handleUsernameInput() {
+    console.log("triggered...");
+  }
+
+  return (
+    <div>
+      <form>
+        <input type="text" value="someText" onChange={handleInputUsername} />
+      </form>
+    </div>
+  );
+}
+```
+
+- Notice that, even if left blank, keyboard strokes would trigger the function but the text itself would not change. That is because value itself is hardcoded instead of assigning it to a value.
+
+- A variable is needed that holds the information about the text of input. And it is none other than a [state](#state).
+
+```jsx
+import { useState } from "react";
+
+export default function LoginForm() {
+  const [username, setUsername] = useState("");
+
+  function handleUsernameInput() {
+    console.log("triggered...");
+  }
+
+  return (
+    <div>
+      <form>
+        <input type="text" value={username} onChange={handleInputUsername} />
+      </form>
+    </div>
+  );
+}
+```
+
+- When a change occurs an event object is fired containing type of event, source, target, data etc. In order to be able to change the value of our state we can use input's onChange callback. But trying to catch the event directly in our onChange calback will yield an error.
+
+![image](assets/v18/img/error-event-handling-catching-event.png)
+
+- Instead directly catching the event with onChange callback method, we need to catch it with another method and return the event object.
+
+- So in order to change a state with JSX input fields requires a structure as such:
+
+  1. Catch event with a function in onChange accents event object
+  2. Inside that function, return our handler method that modified to accept event object.
+  3. In our handler method call setter of state.
+
+- When logged to console, details of event object can be seen. But the part we are interested is the pressed key and it can be read as `e.target.value`.
+
+```jsx
+import { useState } from "react";
+
+export default function LoginForm() {
+  // initialize as blank
+  const [username, setUsername] = useState("");
+
+  // to oversee keyboard input
+  function handleInputUsername(e) {
+    setUsername(e.target.value);
+  }
+
+  return (
+    <div>
+      <form>
+        <input
+          type="text"
+          value={username}
+          onChange={function pokeball(e) {
+            return handleInputUsername(e);
+          }}
+        />
+      </form>
+    </div>
+  );
+}
+```
+
+- A lambda function can be used to simplify the event object catching.
+
+```jsx
+import { useState } from "react";
+
+export default function LoginForm() {
+  const [username, setUsername] = useState("");
+
+  function handleInputUsername(e) {
+    setUsername(e.target.value);
+  }
+
+  return (
+    <div>
+      <form>
+        <input
+          type="text"
+          value={username}
+          onChange={(e) => handleInputUsername(e)}
+        />
+      </form>
+    </div>
+  );
+}
+```
+
+- If no supervising (validation, type checking...) required, setter of state can be used instead of another function.
+
+```jsx
+import { useState } from "react";
+
+export default function LoginForm() {
+  const [username, setUsername] = useState("");
+
+  return (
+    <div>
+      <form>
+        <input
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+      </form>
+    </div>
+  );
+}
+```
+
+### Handling multiple inputs
+
+- Two inputs can be managed like how one input is currently being managed. But what if we had n amount of inputs to manage? Are we gonna declare n amount of states? No. With one state managing an object with n properties is well suited for this job.
+
+- Since state is now holding an object, setter is expecting an object to assign. That's why in setter we have passed an object with associated property.
+
+```jsx
+import { useState } from "react";
+
+export default function LoginForm() {
+  const [loginCredentials, setloginCredentials] = useState({
+    username: "",
+    password: "",
+  });
+
+  return (
+    <div>
+      <form>
+        <input
+          type="text"
+          value={loginCredentials.username}
+          onChange={(e) => setloginCredentials({ username: e.target.value })}
+        />
+        <input
+          type="text"
+          value={loginCredentials.password}
+          onChange={(e) => setloginCredentials({ password: e.target.value })}
+        />
+      </form>
+    </div>
+  );
+}
+```
+
+- But an error has raised. Simply saying that we are assigning `{username: "value"}` to `{username: "initialValue", password:"initialValue"}`.
+
+![image](assets/v18/img/error-assign-state-object-without-spread-operator.png)
+
+- to fix it JS spread operator can be used. Spread operator states that: Get everything from that, and include this too. Since an object cannot have same propery again, passing a value with an existing property key is overriding previous.
+
+```jsx
+import { useState } from "react";
+
+export default function LoginForm() {
+  const [loginCredentials, setloginCredentials] = useState({
+    username: "",
+    password: "",
+  });
+
+  return (
+    <div>
+      <form>
+        <input
+          type="text"
+          value={loginCredentials.username}
+          onChange={(e) =>
+            setloginCredentials({
+              ...loginCredentials,
+              username: e.target.value,
+            })
+          }
+        />
+        <input
+          type="text"
+          value={loginCredentials.password}
+          onChange={(e) =>
+            setloginCredentials({
+              ...loginCredentials,
+              password: e.target.value,
+            })
+          }
+        />
+      </form>
+    </div>
+  );
+}
+```
+
+### Handling Form Submission
+
+- In HTML after submitting the form, page refreshes or redirects to another URL. That is normal behavior. But in single page application perspective this action is suboptimal because refreshing the page causes data loss. States are cleared.
+
+- To override this behavior, form submit button should call event object's `preventDefault()` method.
+
+```jsx
+import { useState } from "react";
+
+export default function LoginForm() {
+  const [loginCredentials, setloginCredentials] = useState({
+    username: "",
+    password: "",
+  });
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    // save to db etc.
+    console.log(loginCredentials);
+  }
+
+  return (
+    <div>
+      <form>
+        <input
+          type="text"
+          value={loginCredentials.username}
+          onChange={(e) =>
+            setloginCredentials({
+              ...loginCredentials,
+              username: e.target.value,
+            })
+          }
+        />
+        <input
+          type="text"
+          value={loginCredentials.password}
+          onChange={(e) =>
+            setloginCredentials({
+              ...loginCredentials,
+              password: e.target.value,
+            })
+          }
+        />
+
+        <button onClick={(e) => handleSubmit(e)}>Login</button>
+      </form>
+    </div>
+  );
+}
 ```
 
 ## React Technicals
