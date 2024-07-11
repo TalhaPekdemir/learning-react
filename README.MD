@@ -1098,6 +1098,8 @@ export default function InlineStyledComponent() {
 }
 ```
 
+![image](assets/v18/img/styling-inline-styled-component.png)
+
 - Since style in JSX is an object, it can stored in a variable and used afterwards.
 
 ```jsx
@@ -1108,17 +1110,118 @@ export default function InlineStyledComponent() {
 }
 ```
 
-## Styling with Global CSS
+### Styling with Global CSS
 
 - Write a style sheet and import. Just like HTML CSS selector styling.
 
-## Styling with CSS Modules
+- CSS files should be imported in the component will be used. To apply globally, should be imported in App.jsx.
 
-- Instead of defining single stylesheet for the entire app, a stylesheet can be defined for every component.
+```css
+/* src/css/style.css */
+.header {
+  color: #f1497a;
+  font-family: "Courier New", Courier, monospace;
+  background-color: aliceblue;
+}
+```
 
-## Styling with external CSS Libraries
+```jsx
+// src/components/StyleSheetComponent.jsx
+import "../css/style.css";
 
-- Bootstrap, Tailwind...
+export default function StyleSheetComponent() {
+  return <h1 className="header">StyleSheetComponent</h1>;
+}
+```
+
+### Styling with CSS Modules
+
+- Instead of defining single stylesheet for the entire app, a stylesheet can be defined for every component. Reducing the chance of CSS name clashing.
+
+- Useful when working at same project with large groups.
+
+- Defined CSS file name should follow as `componentname.module.css`. Some developers prefer all lower case, some keeps component name same like, `ComponentName.module.css`. CSS selectors or classes are written as same.
+
+- Importing should be done like so:
+
+```jsx
+import styles from "./ComponentName.module.css";
+```
+
+- And usage is similar to global styling. Only key difference is, since import statement is made via _styles_ and definition is part of JS, class names should be accessed as `classname={styles.className}` so React can evaluate JSX. 
+
+- As demonstrated with two different components, each having an element with same class name but different style.
+
+  - **App.jsx**
+
+  ```jsx
+  import InlineStyledComponent from "./components/InlineStyledComponent";
+  import StyleSheetComponent from "./components/StyleSheetComponent";
+  import StyleSheetComponentTwo from "./components/StyleSheetComponentTwo";
+
+  function App() {
+    return (
+      <div className="App">
+        <InlineStyledComponent />
+        <StyleSheetComponent />
+        <StyleSheetComponentTwo />
+      </div>
+    );
+  }
+
+  export default App;
+  ```
+
+  - **StyleSheetComponent**
+
+  ```css
+  /* StyleSheetComponent.module.css */
+  .header {
+    background-color: rgb(33, 33, 33);
+    color: rgb(180, 205, 205);
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  ```
+
+  ```jsx
+  /* StyleSheetComponent.jsx */
+  import styles from "./StyleSheetComponent.module.css";
+
+  export default function StyleSheetComponent() {
+    return <h1 className={styles.header}>StyleSheetComponent</h1>;
+  }
+  ```
+
+- **StyleSheetComponentTwo**
+
+  ```css
+  /* StyleSheetComponentTwo.module.css */
+  .header {
+    background-color: rgb(58, 70, 125);
+    color: rgb(227, 187, 165);
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 10px;
+  }
+  ```
+
+  ```jsx
+  /* StyleSheetComponentTwo.jsx */
+  import styles from "./StyleSheetComponentTwo.module.css";
+
+  export default function StyleSheetComponentTwo() {
+    return (
+      <h1 className={styles.header}>
+        StyleSheetComponentTwo: Electric Boogaloo
+      </h1>
+    );
+  }
+  ```
+
+  ![image](assets/v18/img/module-css-components.png)
+
+### Styling with external CSS Libraries
+
+- [Bootstrap](https://getbootstrap.com/), [Tailwind](https://tailwindcss.com/)... Plug and play.
 
 ## React Technicals
 
@@ -1140,4 +1243,4 @@ ReactDOM.createRoot(document.getElementById("root")).render(
 
 ## Nice To Have
 
-- In VS Code function components can be created with "rfc" shortcut. Similarly class components can be created with "rcc" shortcut. Pressing enter or tab will create the component with the same name of created file. There are bunch more auto-complete shortcuts like component with props, when using react native etc. Check out by writing rf (for function components) or rc (for class components) and check out listed Intellisense.
+- In VS Code function components can be created with "rfc" shortcut. Similarly class components can be created with "rcc" shortcut. Pressing enter or tab will create the component with the same name of created file. There are bunch more auto-complete shortcuts like component with props, when using react native etc. Check out by writing rf (for function components) or rc (for class components) for listed Intellisense options.

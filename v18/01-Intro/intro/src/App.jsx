@@ -9,6 +9,8 @@ import BasicEventHandling from "./components/BasicEventHandling";
 import Counter from "./components/Counter";
 import LoginForm from "./components/LoginForm";
 import InlineStyledComponent from "./components/InlineStyledComponent";
+import StyleSheetComponent from "./components/StyleSheetComponent";
+import StyleSheetComponentTwo from "./components/StyleSheetComponentTwo";
 
 function App() {
   // A component has to return a JSX.
@@ -29,6 +31,8 @@ function App() {
       {/* <Counter /> */}
       {/* <LoginForm /> */}
       <InlineStyledComponent />
+      <StyleSheetComponent />
+      <StyleSheetComponentTwo />
     </div>
   );
 }
