@@ -8,6 +8,7 @@ import Products from "./components/Products";
 import BasicEventHandling from "./components/BasicEventHandling";
 import Counter from "./components/Counter";
 import LoginForm from "./components/LoginForm";
+import InlineStyledComponent from "./components/InlineStyledComponent";
 
 function App() {
   // A component has to return a JSX.
@@ -26,7 +27,8 @@ function App() {
       {/* <Products /> */}
       {/* <BasicEventHandling /> */}
       {/* <Counter /> */}
-      <LoginForm />
+      {/* <LoginForm /> */}
+      <InlineStyledComponent />
     </div>
   );
 }

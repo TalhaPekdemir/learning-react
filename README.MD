@@ -1062,6 +1062,52 @@ export default function LoginForm() {
 
 - Like HTML elements, JSX elements accept inline style tags.
 
+- When writing autocomplete will generate the style attribute as such:
+
+```jsx
+export default function InlineStyledComponent() {
+  return (
+    <h3 style={}>InlineStyledComponent</h3>
+  )
+}
+```
+
+- We have used curly braces for evaluating JS. How are we gonna write CSS in JS area?
+
+- While styling JSX, CSS is actually a JS object. React maps object propeties to CSS styles.
+
+- If JSX styling done with objects, we require an object inside JS evaluator curly braces. Which happens to be curly braces inside curly braces. One for evaluation, one for defining CSS object.
+
+```jsx
+export default function InlineStyledComponent() {
+  return <h3 style={{ color: "#7A49F1" }}>InlineStyledComponent</h3>;
+}
+```
+
+- Writing regular styles would not work here because style is actually an object and object properties has to follow certain naming conventions. In CSS kebab-case is used to seperate words, here camelCase counterpart is used.
+
+```jsx
+// WRONG
+export default function InlineStyledComponent() {
+  return <h3 style={{ color: "#7A49F1", font-family:"Helvetica" }}>InlineStyledComponent</h3>;
+}
+
+// VALID
+export default function InlineStyledComponent() {
+  return <h3 style={{ color: "#7A49F1", fontFamily:"Helvetica" }}>InlineStyledComponent</h3>;
+}
+```
+
+- Since style in JSX is an object, it can stored in a variable and used afterwards.
+
+```jsx
+export default function InlineStyledComponent() {
+  const headerStyle = { color: "#7A49F1", fontFamily: "Helvetica" };
+
+  return <h3 style={headerStyle}>InlineStyledComponent</h3>;
+}
+```
+
 ## Styling with Global CSS
 
 - Write a style sheet and import. Just like HTML CSS selector styling.
