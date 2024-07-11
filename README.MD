@@ -25,8 +25,13 @@ My adventures with React
 6. [Handling User Input](#handling-user-input)
    - [Handling Multiple Inputs](#handling-multiple-inputs)
    - [Handling Form Submission](#handling-form-submission)
-7. [React Technicals](#react-technicals)
-8. [Nice to Have](#nice-to-have)
+7. [Styling](#styling)
+   - [Inline Styling](#inline-styling)
+   - [Styling with Global CSS](#styling-with-global-css)
+   - [Styling with CSS Modules](#styling-with-css-modules)
+   - [Styling with External CSS Libraries](#styling-with-external-css-libraries)
+8. [React Technicals](#react-technicals)
+9. [Nice to Have](#nice-to-have)
 
 ## Component
 
@@ -1050,6 +1055,24 @@ export default function LoginForm() {
   );
 }
 ```
+
+## Styling
+
+### Inline Styling
+
+- Like HTML elements, JSX elements accept inline style tags.
+
+## Styling with Global CSS
+
+- Write a style sheet and import. Just like HTML CSS selector styling.
+
+## Styling with CSS Modules
+
+- Instead of defining single stylesheet for the entire app, a stylesheet can be defined for every component.
+
+## Styling with external CSS Libraries
+
+- Bootstrap, Tailwind...
 
 ## React Technicals
 
