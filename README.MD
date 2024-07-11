@@ -1192,7 +1192,7 @@ import styles from "./ComponentName.module.css";
   }
   ```
 
-- **StyleSheetComponentTwo**
+  - **StyleSheetComponentTwo**
 
   ```css
   /* StyleSheetComponentTwo.module.css */
