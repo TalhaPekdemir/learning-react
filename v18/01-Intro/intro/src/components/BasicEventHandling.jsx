@@ -1,7 +1,11 @@
 export default function BasicEventHandling() {
-  function handleClick() {
-    alert("You have been alerted!");
+  function handleClick(text) {
+    alert(text);
   }
 
-  return <button onClick={handleClick}>click to get an alert</button>;
+  return (
+    <button onClick={() => handleClick("Custom text whooo!")}>
+      click to get a customized alert
+    </button>
+  );
 }

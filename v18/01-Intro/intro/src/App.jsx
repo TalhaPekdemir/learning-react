@@ -27,12 +27,12 @@ function App() {
       {/* <Basket /> */}
       {/* <LogInOutButton /> */}
       {/* <Products /> */}
-      {/* <BasicEventHandling /> */}
+      <BasicEventHandling />
       {/* <Counter /> */}
       {/* <LoginForm /> */}
-      <InlineStyledComponent />
+      {/* <InlineStyledComponent />
       <StyleSheetComponent />
-      <StyleSheetComponentTwo />
+      <StyleSheetComponentTwo /> */}
     </div>
   );
 }

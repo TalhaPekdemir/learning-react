@@ -19,6 +19,8 @@ My adventures with React
    - [Rendering arrays](#rendering-arrays)
    - [Rendering array of objects](#rendering-array-of-objects)
 4. [Event Handling](#event-handling)
+   - [Event Basics](#event-basics)
+   - [Passing parameter to event](#passing-parameter-to-event)
 5. [State](#state)
    - [Why State?](#why-state)
    - [Using State](#using-state)
@@ -631,7 +633,7 @@ export default function Basket() {
 
 ### Event Basics
 
-To make a website interactive, JS events are used. Like clicking a button or hovering a section. Every JS event has an implementation in React.
+To make a website interactive, JS events are used commonly. Like clicking a button or hovering a section. Every JS event has an implementation in React.
 
 ```jsx
 <button onClick={someClickEventHandler}> Click </button>
@@ -660,13 +662,37 @@ export default function BasicEventHandling() {
 
 Notice that we haven't called the handler function using braces in JSX. If we did that, function would execute once (twice in strict mode) **[TODO: add reference]** upon rendering and not respond afterwards.
 
+### Passing Parameter to Event
+
+- When passing a parameter, braces are used same as non parameterized function. Thus executing function upon rendering because of function expression. As written above, calling a function directly in events would give an error.
+
+- Lambda expressions can be used to negate this effect since it is a definition rather than an expression.
+
+```jsx
+export default function BasicEventHandling() {
+  function handleClick(text) {
+    alert(text);
+  }
+
+  return (
+    <button onClick={() => handleClick("Custom text whooo!")}>
+      click to get a customized alert
+    </button>
+  );
+}
+```
+
+- JS event object can be catched like `(e) => myHandlerMethod(e)` if needed. For more examples see [Form Handling](#handling-user-input).
+
+- Other parameters can be passed to handler function like `(e) => myHandlerMethod(e, param1, param2)`
+
 ---
 
 ## State
 
 ### Why state?
 
-[Props](#props) are immutable data containers in react. But what do we do when we need to store something mutable? That's where state comes in. States are objects that holding information about control or behavior of a component.
+[Props](#props) are immutable data containers in React. But what do we do when we need to store something mutable? That's where state comes in. States are objects that holding information about control or behavior of a component.
 
 |         Prop          |           State           |
 | :-------------------: | :-----------------------: |
@@ -1148,7 +1174,7 @@ export default function StyleSheetComponent() {
 import styles from "./ComponentName.module.css";
 ```
 
-- And usage is similar to global styling. Only key difference is, since import statement is made via _styles_ and definition is part of JS, class names should be accessed as `classname={styles.className}` so React can evaluate JSX. 
+- And usage is similar to global styling. Only key difference is, since import statement is made via _styles_ and definition is part of JS, class names should be accessed as `classname={styles.className}` so React can evaluate JSX.
 
 - As demonstrated with two different components, each having an element with same class name but different style.
 
