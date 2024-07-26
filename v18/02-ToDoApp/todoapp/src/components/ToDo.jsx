@@ -1,9 +1,8 @@
 import { useState } from "react";
-import styles from "./ToDo.module.css";
 import ToDoList from "./ToDoList";
+import TodoForm from "./TodoForm";
 
 export default function ToDo() {
-  const [todo, setTodo] = useState("");
   const [todoList, setTodoList] = useState([]);
 
   // get total amount of todos
@@ -17,27 +16,11 @@ export default function ToDo() {
   // get amount of unfinished todos
   var unfinishedTasks = totalTasks - finishedTasks;
 
-  // handler for add todo button
-  function handleAddClick(e) {
-    // prevent page refreshing
-    e.preventDefault();
-
-    // add todo from input to todoList
-    setTodoList([
-      ...todoList,
-      { id: crypto.randomUUID(), name: todo, isCompleted: false },
-    ]);
-
-    // clear input field
-    setTodo("");
-  }
-
   // works but noted that building another array might suffer performance
   // TODO: benchmark both
   // Benchmark result:
   // Updating a todo takes less than a millisecond in both cases.
-  function completeTodoCallback(id) {
-    const startTime = Date.now();
+  const completeTodo = (id) => {
     // find the index of todo that needs updating
     // const updateIndex = todoList.findIndex((todo) => todo.id === id);
 
@@ -61,32 +44,24 @@ export default function ToDo() {
       return todo;
     });
 
-    const stopTime = Date.now();
-
-    const elapsed = stopTime - startTime;
-    console.log(elapsed + "ms");
-
     setTodoList(updatedTodoList);
-  }
+  };
+
+  const deleteTodo = (id) => {
+    const deleteIndex = todoList.findIndex((todo) => todo.id === id);
+
+    const newList = [
+      ...todoList.slice(0, deleteIndex),
+      ...todoList.slice(deleteIndex + 1),
+    ];
+
+    setTodoList(newList);
+  };
 
   return (
     <div>
-      <div>
-        <form>
-          <input
-            value={todo}
-            onChange={(e) => setTodo(e.target.value)}
-            className={styles.todoInput}
-          />
-          <button
-            onClick={(e) => handleAddClick(e)}
-            className={styles.todoFormButton}
-          >
-            Add
-          </button>
-        </form>
-      </div>
-      <ToDoList todoList={todoList} completeCallback={completeTodoCallback} />
+      <TodoForm todoList={todoList} setTodoList={setTodoList} />
+      <ToDoList todoList={todoList} setTodoList={setTodoList} />
       Total tasks: {totalTasks}
       <br />
       Finished: {finishedTasks}
