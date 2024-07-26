@@ -1,0 +1,35 @@
+.todoItem{
+    margin: 0 auto;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.todoItem:last-child{
+    border-bottom: none;
+}
+
+.todoItem:hover{
+    cursor: pointer;
+}
+
+.todoItemName{
+    font-weight: bold;
+    padding: 10px;
+    font-size: 1.6em;
+}
+
+.itemChecked{
+    text-decoration: line-through;
+}
+
+.deleteButton{
+    padding: 8px 12px;
+    background-color: rgb(194, 51, 51);
+    color: white;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+}
+
