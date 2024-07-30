@@ -33,7 +33,8 @@ My adventures with React
    - [Styling with CSS Modules](#styling-with-css-modules)
    - [Styling with External CSS Libraries](#styling-with-external-css-libraries)
 8. [React Technicals](#react-technicals)
-9. [Nice to Have](#nice-to-have)
+9. [Vite Technicals](#vite-technicals)
+10. [Nice to Have](#nice-to-have)
 
 ## Component
 
@@ -1264,6 +1265,24 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   </React.StrictMode>
 );
 ```
+
+## Vite Technicals
+
+- Hiding API keys with dotenv is different. [For more information](https://vitejs.dev/guide/env-and-mode.html).
+
+- Instead of using `process.env.YOURKEYNAME`, use `import.meta.env.YOURKEYNAME`.
+
+```js
+const apiKey = import.meta.env.VITE_SOME_API_KEY;
+```
+
+- In .env file:
+
+```
+VITE_SOME_API_KEY = 'somaapikey'
+```
+
+- Environment variables without `VITE_` prefix will not be exposed to vite application. Will be seen as `undefined`. This prefix can be customized.
 
 ---
 
