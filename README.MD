@@ -21,20 +21,25 @@ My adventures with React
 4. [Event Handling](#event-handling)
    - [Event Basics](#event-basics)
    - [Passing parameter to event](#passing-parameter-to-event)
-5. [State](#state)
+5. [React Hooks](#react-hooks)
+   - [What is a hook?](#what-is-a-hook)
+   - [Hook Basics](#hook-basics)
+   - [useState hook](#usestate-hook)
+   - [useEffect hook](#useeffect-hook)
+6. [State](#state)
    - [Why State?](#why-state)
    - [Using State](#using-state)
-6. [Handling User Input](#handling-user-input)
+7. [Handling User Input](#handling-user-input)
    - [Handling Multiple Inputs](#handling-multiple-inputs)
    - [Handling Form Submission](#handling-form-submission)
-7. [Styling](#styling)
+8. [Styling](#styling)
    - [Inline Styling](#inline-styling)
    - [Styling with Global CSS](#styling-with-global-css)
    - [Styling with CSS Modules](#styling-with-css-modules)
    - [Styling with External CSS Libraries](#styling-with-external-css-libraries)
-8. [React Technicals](#react-technicals)
-9. [Vite Technicals](#vite-technicals)
-10. [Nice to Have](#nice-to-have)
+9. [React Technicals](#react-technicals)
+10. [Vite Technicals](#vite-technicals)
+11. [Nice to Have](#nice-to-have)
 
 ## Component
 
@@ -688,6 +693,89 @@ export default function BasicEventHandling() {
 - Other parameters can be passed to handler function like `(e) => myHandlerMethod(e, param1, param2)`
 
 ---
+
+## React Hooks
+
+### What is a hook?
+
+- [Hooks](https://react.dev/reference/react/hooks) are functions that allows developers to use special React features inside components. Like storing a value, sending data to deeply nested components, interacting with different systems (networking, APIs...), skipping render times. New hooks can be defined as well by combining built-in hooks [Reference](https://react.dev/learn/reusing-logic-with-custom-hooks#extracting-your-own-custom-hook-from-a-component).
+
+### Hook Basics
+
+- React hooks should only be called from React components.
+
+- Built-in hooks: [useState](#state), [useEffect](#todo)
+
+### useState hook
+
+- For detailed information see [State](#state).
+
+### useEffect hook
+
+- Is used to synchronize a component with an external system. Like making API calls.
+
+- useEffect hook expects a callback function called setup and an optional array of dependencies.
+
+- Syntax:
+
+```jsx
+useEffect(() => {}, []);
+```
+
+- Setup will run when component is mounted at startup.
+
+```jsx
+useEffect(() => {
+  console.log("Hello");
+}, []);
+```
+
+- Above code will run once (twice if Strict Mode enabled) at page rendered for the first time.
+
+```jsx
+useEffect(() => {
+  console.log("Hello");
+}, [someTrackable]);
+```
+
+- Above code will execute every time `someTrackable` value changes.
+
+- **How to decide if we need a dependency?** Dependencies are used inside setup function. If you want to reach a state or a prop from useEffect, add it as a dependency.
+
+- Dependencies are called as "Reactive" values in React documents and can be state, prop, any value or function declared inside the component.
+
+- Setup can include a cleanup function. Cleanup function executes before re-executing the entire effect when a change occured in dependencies. Cleanup happens with previous states or props even though it was updated. That way anything that needs to be closed (like a connection) or wiped away, can be executed last.
+
+```jsx
+useEffect(() => {
+  console.log("Hello");
+  return () => {
+    // cleanup code
+  };
+}, [someTrackable]);
+```
+
+- Abobe code shows the syntax for one reactive value, a setup function and a cleanup function.
+
+- Note: If you declared a function inside a setup and it is not working as expected, remember to call it afterwards.
+
+```jsx
+// will not work
+useEffect(() => {
+  function demo() {
+    // some code
+  }
+}, []);
+
+// will work
+useEffect(() => {
+  function test() {
+    // some code
+  }
+
+  test();
+}, []);
+```
 
 ## State
 
