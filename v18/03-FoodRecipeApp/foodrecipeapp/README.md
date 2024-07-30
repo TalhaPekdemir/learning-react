@@ -11,7 +11,7 @@ npm install
 3. Create `.env` folder in the working directory then add your API key as
 
 ```
-SPOONACULAR_API_KEY = 'your_key_goes_here'
+VITE_SPOONACULAR_API_KEY = 'your_key_goes_here'
 ```
 
 4. Start the app using
