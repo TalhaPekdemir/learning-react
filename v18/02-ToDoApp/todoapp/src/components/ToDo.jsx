@@ -1,20 +1,21 @@
 import { useState } from "react";
 import ToDoList from "./ToDoList";
 import TodoForm from "./TodoForm";
+import Footer from "./Footer";
 
 export default function ToDo() {
   const [todoList, setTodoList] = useState([]);
 
   // get total amount of todos
-  var totalTasks = todoList.length;
+  const totalTasks = todoList.length;
 
   // get amount of finished todos
-  var finishedTasks = todoList.filter((item) => {
-    item.isCompleted == true;
-  });
+  const completedTasks = todoList.filter(
+    (item) => item.isCompleted == true
+  ).length;
 
   // get amount of unfinished todos
-  var unfinishedTasks = totalTasks - finishedTasks;
+  const unfinishedTasks = totalTasks - completedTasks;
 
   // works but noted that building another array might suffer performance
   // TODO: benchmark both
@@ -62,10 +63,11 @@ export default function ToDo() {
     <div>
       <TodoForm todoList={todoList} setTodoList={setTodoList} />
       <ToDoList todoList={todoList} setTodoList={setTodoList} />
-      Total tasks: {totalTasks}
-      <br />
-      Finished: {finishedTasks}
-      Unfinished: {unfinishedTasks}
+      <Footer
+        total={totalTasks}
+        completed={completedTasks}
+        unfinished={unfinishedTasks}
+      />
     </div>
   );
 }

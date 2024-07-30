@@ -4,6 +4,8 @@
     border-radius: 10px;
     margin: 0 auto;
     margin-top: 20px;
+    margin-bottom: 50px;
     padding: 10px;
     box-shadow: 0 4px 6px rgb(0, 0, 0, 0.1);
+    text-align: center;
 }
