@@ -719,6 +719,8 @@ export default function BasicEventHandling() {
 - Syntax:
 
 ```jsx
+import { useEffect } from "react";
+
 useEffect(() => {}, []);
 ```
 
@@ -776,6 +778,30 @@ useEffect(() => {
   test();
 }, []);
 ```
+
+### useRef hook
+
+- Like [state](#state), but does not trigger a re-render when changed.
+
+- Stores an object with one property called `current`.
+
+- To use it shold be imported like so,
+
+```jsx
+import { useRef } from "react";
+```
+
+- and used like,
+
+```jsx
+const timeout = useRef(0);
+```
+
+- Initial value can be any value type.
+
+- `current` property is mutable unlike state. But if stores an object or value that should be rendered when changed, do not use ref. Use state.
+
+- Upon re-rendering the page, states will be lost but ref would stay the same.
 
 ## State
 
