@@ -1,0 +1,6 @@
+.columnContainer{
+    background-color: aquamarine;
+    padding: 10px;
+    margin: 10px;
+    flex: 1;
+}
