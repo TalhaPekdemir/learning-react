@@ -1,10 +1,10 @@
 import FoodItem from "./FoodItem";
-
-export default function FoodList({ foodList }) {
+import styles from "./foodlist.module.css";
+export default function FoodList({ foodList, setFoodId }) {
   return (
-    <div>
+    <div className={styles.listContainer}>
       {foodList?.map((food) => (
-        <FoodItem key={food.id} food={food} />
+        <FoodItem key={food.id} food={food} setFoodId={setFoodId} />
       ))}
     </div>
   );
