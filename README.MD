@@ -169,6 +169,53 @@ export default function Basket() {
 }
 ```
 
+### Wrapping a component with another component
+
+- Until now all the component usage we seen used self closing tags. But a component can be parent to another component by wrapping it. (Different than importing and using another component inside a component.) This type of component hierarchy can be used for adding structure to the code. That's why you can come across it as "structural component".
+
+```jsx
+// StructuralComponent.jsx
+export default function StructuralComponent() {
+  return <div></div>;
+}
+
+// Header.jsx
+export default function Header() {
+  return <h1>Header Component</h1>;
+}
+
+// App.jsx
+import StructuralComponent from "./components/StructuralComponent";
+import Header from "./components/Header";
+
+function App() {
+  return (
+    <div className="App">
+      <StructuralComponent>
+        <Header/>
+      </StructuralComponent>
+    </div>
+  );
+}
+
+export default App;
+```
+
+- But upon executing above code will not yiled de expected result. Why? Because `StructuralComponent` i still returning a div and nothing else.
+
+- In order to render the wrapped child component within the parent,
+  1. It can be passed as [props](#props),
+  2. `{ children }` property can be added to `StructuralComponent`.
+
+```jsx
+// updated StructuralComponent.jsx
+export default function StructuralComponent({ children }) {
+  return <div>{children}</div>;
+}
+```
+
+![image](assets/v18//img/structural-component-desired-result.png)
+
 ### Conditional Rendering
 
 - Preference 1: Everything at one place all at once

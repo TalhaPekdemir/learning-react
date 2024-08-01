@@ -11,6 +11,7 @@ import LoginForm from "./components/LoginForm";
 import InlineStyledComponent from "./components/InlineStyledComponent";
 import StyleSheetComponent from "./components/StyleSheetComponent";
 import StyleSheetComponentTwo from "./components/StyleSheetComponentTwo";
+import StructuralComponent from "./components/StructuralComponent";
 
 function App() {
   // A component has to return a JSX.
@@ -27,12 +28,15 @@ function App() {
       {/* <Basket /> */}
       {/* <LogInOutButton /> */}
       {/* <Products /> */}
-      <BasicEventHandling />
+      {/* <BasicEventHandling /> */}
       {/* <Counter /> */}
       {/* <LoginForm /> */}
       {/* <InlineStyledComponent />
       <StyleSheetComponent />
       <StyleSheetComponentTwo /> */}
+      <StructuralComponent>
+        <Header/>
+      </StructuralComponent>
     </div>
   );
 }
