@@ -1,0 +1,23 @@
+.infoCard{
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+    padding: 20px;
+    margin: 20px;
+    width: 600px;
+}
+
+.infoText{
+    text-align: center;
+    color: #101042;
+}
+
+.infoImage{
+    border-radius: 5px;
+    width: 100%;
+    height: auto;
+}
+
+.instructions li{
+    color: gray;
+}

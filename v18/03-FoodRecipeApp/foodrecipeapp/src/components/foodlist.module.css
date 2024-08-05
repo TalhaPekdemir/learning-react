@@ -1,5 +1,5 @@
 .listContainer{
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
 }
