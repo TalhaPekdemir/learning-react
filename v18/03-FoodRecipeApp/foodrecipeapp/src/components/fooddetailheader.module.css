@@ -1,0 +1,10 @@
+.infoText {
+    text-align: center;
+    color: #101042;
+}
+
+.infoImage {
+    border-radius: 5px;
+    width: 100%;
+    height: auto;
+}
