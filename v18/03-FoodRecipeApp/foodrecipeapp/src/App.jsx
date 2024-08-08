@@ -8,6 +8,7 @@ import ColumnContainer from "./components/ColumnContainer";
 import FoodDetails from "./components/FoodDetails";
 
 import "./App.css";
+import DummyFoodList from "./components/DummyFoodList";
 
 function App() {
   const [foodData, setFoodData] = useState({});
@@ -19,6 +20,8 @@ function App() {
       <Search setFoodData={setFoodData} />
       <FlexContainer>
         <FoodList foodList={foodData.results} setFoodId={setFoodId} />
+
+        {/* <DummyFoodList /> */}
 
         {foodId ? (
           <ColumnContainer>
