@@ -1,36 +1,45 @@
 .itemCard{
-    background-color: white;
+    /* background-color: white;
     width: 300px;
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
     margin: 20px;
+    overflow: hidden; */
+
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
     overflow: hidden;
+
+    /* border: 1px solid blue; */
+    display: flex;
+    flex-direction: column;
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 310px;
+    margin: 20px;
 }
 
 .cardImage{
     width: 100%;
     height: auto;
-}
-
-.cardContent{
-    text-align: center;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
 }
 
 .cardText{
     font-weight: 500;
-    margin: 10px;
-}
+    margin: 20px 10px 50px 10px;
 
-.cardButtonContainer{
-    margin-bottom: 10px;
-    display: flex;
-    justify-content: space-around;
     text-align: center;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
 }
 
 .cardButton{
     border: none;
-    border-radius: 6px;
     color: white;
     background-color: rgb(234, 150, 60);
     font-size: 15px;
